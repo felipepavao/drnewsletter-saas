@@ -89,7 +89,7 @@ class PlannerService
     }
 
     /** Resumo textual da voz da marca para injetar no prompt. */
-    private static function formatBrand(array $brand): string
+    public static function formatBrand(array $brand): string
     {
         $p = $brand['parsed'] ?? [];
         if (!$p) {
@@ -120,7 +120,7 @@ class PlannerService
         return implode("\n", $lines);
     }
 
-    private static function normalizeType(string $t): string
+    public static function normalizeType(string $t): string
     {
         $t = mb_strtolower(trim($t));
         // Aceita variações comuns
@@ -134,7 +134,7 @@ class PlannerService
         return $map[$t] ?? $t;
     }
 
-    private static function normalizeIntensity(string $i): string
+    public static function normalizeIntensity(string $i): string
     {
         $i = mb_strtolower(trim($i));
         if ($i === '') return 'suave';

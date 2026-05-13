@@ -77,13 +77,12 @@ class PlannerController
             redirect('/clientes');
         }
         $client = Client::findForUser($uid, (int) $plan['client_id']);
-        $parsed = $plan['themes_json'] ? json_decode($plan['themes_json'], true) : [];
 
         View::render('planner/show', [
             'pageTitle' => 'Plano ' . sprintf('%02d/%d', $plan['month'], $plan['year']) . ' — ' . APP_NAME,
             'plan'      => $plan,
             'client'    => $client,
-            'parsed'    => $parsed,
+            'parsed'    => $plan['plan_data'] ?? [],
         ], 'app');
     }
 
@@ -114,7 +113,7 @@ class PlannerController
             redirect('/clientes');
         }
         $client = Client::findForUser($uid, (int) $plan['client_id']);
-        $parsed = $plan['themes_json'] ? json_decode($plan['themes_json'], true) : [];
+        $parsed = $plan['plan_data'] ?? [];
 
         $monthName = Prompts::monthName((int) $plan['month']);
         $out  = "PLANEJAMENTO — {$client['name']}\n";

@@ -30,7 +30,13 @@ class MonthlyPlan
             [$planId, $userId]
         );
         if ($row) {
-            $row['themes'] = json_decode($row['themes_json'] ?? '[]', true) ?: [];
+            $parsed = $row['themes_json']
+                ? (json_decode($row['themes_json'], true) ?: [])
+                : [];
+            // $row['themes'] = lista de temas (array indexado).
+            // $row['plan_data'] = estrutura completa (title/summary/strategy/themes/...).
+            $row['plan_data'] = $parsed;
+            $row['themes']    = is_array($parsed['themes'] ?? null) ? array_values($parsed['themes']) : [];
         }
         return $row;
     }
@@ -88,21 +94,18 @@ class MonthlyPlan
         );
     }
 
-    /** Substitui o themes_json (usado pelos temas avulsos). */
+    /** Substitui só o array de temas dentro de themes_json, preservando título/summary/etc. */
     public static function updateThemes(int $userId, int $planId, array $themes): int
     {
-        $parsed = self::findForUser($userId, $planId);
-        if (!$parsed) return 0;
-        $current = $parsed;
-        $current['themes'] = $themes;
-        // Atualiza JSON preservando os outros campos da estrutura original
-        $json = $parsed['themes_json'] ? json_decode($parsed['themes_json'], true) : [];
-        $json['themes'] = $themes;
+        $plan = self::findForUser($userId, $planId);
+        if (!$plan) return 0;
+        $structure = $plan['plan_data'] ?? [];
+        $structure['themes'] = array_values($themes);
         return Database::execute(
             'UPDATE monthly_plans
                 SET themes_json = ?, updated_at = CURRENT_TIMESTAMP
               WHERE id = ? AND user_id = ?',
-            [json_encode($json, JSON_UNESCAPED_UNICODE), $planId, $userId]
+            [json_encode($structure, JSON_UNESCAPED_UNICODE), $planId, $userId]
         );
     }
 }

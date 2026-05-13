@@ -190,4 +190,134 @@ TXT;
                   'Novembro', 'Dezembro'];
         return $names[$m] ?? '';
     }
+
+    // -----------------------------------------------------------------
+    //  TEMAS AVULSOS
+    // -----------------------------------------------------------------
+
+    public static function themesSystem(): string
+    {
+        $context = self::CONTEXT;
+        return <<<TXT
+{$context}
+
+TAREFA: gerar N temas avulsos para somar a um planejamento existente.
+Mesmo framework de categorias do planejador (educação, história,
+bastidor, estilo, convite), mesmas regras (sem urgência falsa, voz
+humana, hook concreto).
+
+FORMATO DE SAÍDA (apenas JSON, sem prefixo):
+
+{
+  "themes": [
+    {
+      "title": string,
+      "type": "educação"|"história"|"bastidor"|"estilo"|"convite",
+      "goal": string,
+      "hook": string,
+      "cta": string,
+      "cta_intensity": "suave"|"média"|"firme"
+    }
+  ]
+}
+TXT;
+    }
+
+    public static function themesUser(
+        string $clientName,
+        int $count,
+        string $extraContext,
+        string $brandContext,
+        string $existingThemesText
+    ): string {
+        $extra = $extraContext !== '' ? "\n\nCONTEXTO ADICIONAL:\n{$extraContext}" : '';
+        $existing = $existingThemesText !== ''
+            ? "\n\nTEMAS JÁ EXISTENTES NO PLANO (não repetir):\n{$existingThemesText}"
+            : '';
+        return <<<TXT
+CLIENTE: {$clientName}
+GERAR: {$count} temas novos
+
+VOZ DA MARCA:
+{$brandContext}
+{$existing}
+{$extra}
+
+Devolva só o JSON com os {$count} temas.
+TXT;
+    }
+
+    // -----------------------------------------------------------------
+    //  ESCRITOR DE EMAILS
+    // -----------------------------------------------------------------
+
+    public static function writerSystem(string $brandContext, string $archiveContext): string
+    {
+        $context = self::CONTEXT;
+        $archive = $archiveContext !== ''
+            ? "\n\nEXEMPLOS DE EMAILS JÁ ENVIADOS PELO CLIENTE (referência de tom,\nritmo, estrutura. APRENDA a forma; não copie literalmente; respeite\nDONTS da voz acima quando houver conflito):\n\n{$archiveContext}"
+            : '';
+        return <<<TXT
+{$context}
+
+TAREFA: você é o escritor que coloca o tema em forma de email. Você
+conversa com o operador (Felipe e equipe Dr. Newsletter). Em cada
+turno, você pode:
+
+- gerar uma versão nova do email do tema dado;
+- iterar a versão anterior com o feedback do operador;
+- fazer perguntas pontuais antes de escrever, se precisar.
+
+ESTILO:
+
+- Voz humana, em português BR adulto.
+- Entre direto no fato. Sem "deixa eu te contar", "vou te explicar",
+  "preciso te falar sobre" — essas são frases que ANUNCIAM em vez de
+  CONTAR. Conte direto.
+- Storytelling concreto: nome, cena, detalhe. Não genérico.
+- Sem urgência fabricada, sem promessa exagerada, sem emojis em excesso.
+- Respeitar a voz da marca abaixo. Os DONTS são INEGOCIÁVEIS.
+
+FORMATO DE SAÍDA quando gerar um email (use exatamente esta estrutura):
+
+SUBJECT (3 opções, 30-50 caracteres cada):
+1. ...
+2. ...
+3. ...
+
+PREVIEW (50-90 caracteres, complementa o subject, não repete a 1ª linha do body):
+...
+
+BODY:
+...
+
+P.S.:
+... (opcional, curto)
+
+VOZ DA MARCA:
+{$brandContext}{$archive}
+TXT;
+    }
+
+    public static function writerInitialUserMessage(array $theme): string
+    {
+        $type = $theme['type'] ?? '';
+        $title = $theme['title'] ?? '';
+        $goal  = $theme['goal']  ?? '';
+        $hook  = $theme['hook']  ?? '';
+        $cta   = $theme['cta']   ?? '';
+        $intensity = $theme['cta_intensity'] ?? 'suave';
+
+        return <<<TXT
+Escreva o email para este tema:
+
+- Título do tema: {$title}
+- Categoria: {$type}
+- Objetivo: {$goal}
+- Gancho sugerido: "{$hook}"
+- CTA pretendido: {$cta} (intensidade {$intensity})
+
+Gere a primeira versão no formato indicado.
+TXT;
+    }
 }

@@ -52,6 +52,32 @@ $isDraft = $plan['status'] === 'draft';
         </section>
     <?php endif; ?>
 
+    <?php if ($plan['status'] !== 'archived'): ?>
+        <section class="card">
+            <h2>Adicionar temas avulsos</h2>
+            <p class="muted small">
+                Gera mais temas para somar a este planejamento. Sem repetir o que já existe.
+            </p>
+            <form method="post" action="<?= url('/clientes/' . (int) $client['id'] . '/temas') ?>"
+                  class="stack" data-confirm="Gerar mais temas? Vai usar tokens da IA.">
+                <?= Csrf::field() ?>
+                <input type="hidden" name="plan_id" value="<?= (int) $plan['id'] ?>">
+                <div class="grid-2">
+                    <div class="field">
+                        <label for="count">Quantos</label>
+                        <input type="number" id="count" name="count" class="input" min="1" max="10" value="2" required>
+                    </div>
+                    <div class="field">
+                        <label for="extra_context">Foco <span class="muted small">(opcional)</span></label>
+                        <input type="text" id="extra_context" name="extra_context" class="input"
+                               placeholder="Ex: temas de bastidor, ou agenda do mês">
+                    </div>
+                </div>
+                <button type="submit" class="btn">Gerar mais temas</button>
+            </form>
+        </section>
+    <?php endif; ?>
+
     <section class="themes">
         <?php foreach ($themes as $i => $t): $n = $i + 1; ?>
             <article class="theme-card">
