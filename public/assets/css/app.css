@@ -393,3 +393,42 @@ p  { margin: 0 0 1em; }
     pointer-events: none;
     opacity: 0.45;
 }
+
+/* ----- Voice (brand manual parsed grid) ----- */
+.voice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 0;
+}
+.voice-block h3 {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin: 0 0 0.5rem;
+}
+.voice-block p, .voice-block ul {
+    margin: 0;
+    padding: 0;
+}
+.voice-block ul {
+    list-style: disc inside;
+}
+.voice-block li {
+    margin: 0.125rem 0;
+}
+.taglist {
+    list-style: none !important;
+    padding: 0 !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+.taglist .tag { display: inline-flex; }
+
+/* file input — visual mínimo, herda do .input */
+input[type="file"].input {
+    padding: 0.375rem;
+}
