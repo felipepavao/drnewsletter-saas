@@ -21,5 +21,6 @@
     <footer class="layout-public__footer">
         <small>© <?= date('Y') ?> Dr. Newsletter</small>
     </footer>
+    <script src="<?= asset('js/app.js') ?>" defer></script>
 </body>
 </html>
