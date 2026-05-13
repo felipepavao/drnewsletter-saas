@@ -45,41 +45,6 @@ class Mailer
         return self::send($to, 'Seu código de acesso — ' . APP_NAME, $html);
     }
 
-    public static function sendApprovalEmail(string $to, string $fullName): bool
-    {
-        $safeName = htmlspecialchars($fullName, ENT_QUOTES, 'UTF-8');
-        $url = APP_URL . '/';
-        $html = self::layout(
-            '<h1 style="margin:0 0 16px; font-size:22px; color:#2A2A28;">Seu perfil foi aprovado</h1>'
-            . '<p style="margin:0 0 24px; font-size:16px; color:#5A5A55;">'
-            . 'Olá, ' . $safeName . '. Sua participação na ' . htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8') . ' foi aprovada. '
-            . 'Você já pode acessar o diretório e se conectar com outros membros.'
-            . '</p>'
-            . '<div style="text-align:center; margin:32px 0;">'
-            . '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" '
-            . 'style="display:inline-block; padding:14px 32px; background:#4A6741; color:#fff; '
-            . 'text-decoration:none; border-radius:8px; font-size:16px; font-weight:600;">'
-            . 'Acessar a Rede</a></div>'
-            . '<p style="margin:0; font-size:14px; color:#7A7A75;">'
-            . 'Ao entrar, você receberá um código por este mesmo email.</p>'
-        );
-        return self::send($to, 'Seu perfil foi aprovado — ' . APP_NAME, $html);
-    }
-
-    public static function sendRejectionEmail(string $to, string $fullName): bool
-    {
-        $safeName = htmlspecialchars($fullName, ENT_QUOTES, 'UTF-8');
-        $html = self::layout(
-            '<h1 style="margin:0 0 16px; font-size:22px; color:#2A2A28;">Solicitação não aprovada</h1>'
-            . '<p style="margin:0 0 16px; font-size:16px; color:#5A5A55;">'
-            . 'Olá, ' . $safeName . '. Após análise, não será possível liberar seu acesso à '
-            . htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8') . ' neste momento.</p>'
-            . '<p style="margin:0; font-size:14px; color:#7A7A75;">'
-            . 'Se você acredita que houve um engano, entre em contato com a equipe do workshop.</p>'
-        );
-        return self::send($to, 'Solicitação não aprovada — ' . APP_NAME, $html);
-    }
-
     // ---------- Backends ----------
 
     private static function sendBrevo(string $to, string $subject, string $html): bool

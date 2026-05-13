@@ -73,6 +73,7 @@ define('CLAUDE_TIMEOUT',     (int) env('CLAUDE_REQUEST_TIMEOUT', 120));
 define('CLAUDE_DAILY_USD_CAP', (float) env('CLAUDE_DAILY_USD_CAP', 10));
 
 // --- Email ---
+define('BREVO_API_KEY',   env('BREVO_API_KEY', '')); // opcional; se setado, prefere HTTP API ao SMTP
 define('SMTP_HOST',       env('SMTP_HOST', ''));
 define('SMTP_PORT',       (int) env('SMTP_PORT', 587));
 define('SMTP_USER',       env('SMTP_USER', ''));
