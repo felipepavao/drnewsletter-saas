@@ -1,0 +1,48 @@
+# --- Secrets — nunca commitar ---
+.env
+.env.local
+.env.*.local
+config.local.php
+
+# --- Dados em runtime ---
+data/database.sqlite
+data/database.sqlite-shm
+data/database.sqlite-wal
+data/*.sqlite
+data/*.sqlite-*
+data/*.db
+data/*.db-*
+data/logs/
+data/backups/
+data/cache/
+
+# --- Uploads ---
+public/uploads/*
+!public/uploads/.gitkeep
+
+# --- Dumps e backups ---
+*.dump
+*.sql.gz
+*.tar.gz
+
+# --- Dependências ---
+vendor/
+node_modules/
+composer.phar
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- PHPUnit / Pest ---
+.phpunit.cache/
+.phpunit.result.cache
+coverage/
+
+# --- Logs locais soltos ---
+*.log
+.DS_Store
