@@ -22,7 +22,7 @@ class ClientsController
             'pageTitle' => 'Novo cliente — ' . APP_NAME,
             'client'    => null,
             'errors'    => [],
-            'data'      => ['name' => '', 'email' => '', 'segment' => '', 'notes' => ''],
+            'formData'  => ['name' => '', 'email' => '', 'segment' => '', 'notes' => ''],
         ], 'app');
     }
 
@@ -39,7 +39,7 @@ class ClientsController
                 'pageTitle' => 'Novo cliente — ' . APP_NAME,
                 'client'    => null,
                 'errors'    => $errors,
-                'data'      => $data,
+                'formData'  => $data,
             ], 'app');
             return;
         }
@@ -105,7 +105,7 @@ class ClientsController
             'pageTitle' => 'Editar ' . $client['name'] . ' — ' . APP_NAME,
             'client'    => $client,
             'errors'    => [],
-            'data'      => [
+            'formData'  => [
                 'name'    => $client['name'],
                 'email'   => $client['email']   ?? '',
                 'segment' => $client['segment'] ?? '',
@@ -136,7 +136,7 @@ class ClientsController
                 'pageTitle' => 'Editar ' . $client['name'] . ' — ' . APP_NAME,
                 'client'    => $client,
                 'errors'    => $errors,
-                'data'      => $data,
+                'formData'  => $data,
             ], 'app');
             return;
         }

@@ -3,8 +3,10 @@
 define('APP_ROOT', __DIR__);
 
 // --- .env loader (key=value, # comentários, sem dependência externa) ---
+// SKIP_ENV_FILE=1 pula o carregamento (útil em testes, onde queremos
+// que as vars do test bootstrap não sejam sobrescritas pelo .env local).
 $envFile = APP_ROOT . '/.env';
-if (is_file($envFile)) {
+if (is_file($envFile) && !getenv('SKIP_ENV_FILE')) {
     foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
         $line = trim($line);
         if ($line === '' || $line[0] === '#') continue;

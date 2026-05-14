@@ -558,3 +558,57 @@ input[type="file"].input {
 .chat__body { white-space: pre-wrap; }
 
 .tag--sent     { background: #dce8f4; color: #1c3a59; }
+
+/* ----- Spinner inline para botões em loading ----- */
+.spinner {
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: -0.1em;
+    margin-right: 0.25em;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn.is-loading { cursor: progress; opacity: 0.7; }
+
+/* ----- Contador de caracteres ----- */
+.char-counter {
+    margin-top: 0.25rem;
+    font-size: 0.78rem;
+    text-align: right;
+    color: var(--color-muted);
+}
+
+/* ----- Help page steps ----- */
+.help-steps {
+    counter-reset: hs;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+.help-steps li {
+    counter-increment: hs;
+    margin-bottom: 1.25rem;
+    padding-left: 2.25rem;
+    position: relative;
+}
+.help-steps li::before {
+    content: counter(hs);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.help-steps li p { margin: 0.25rem 0 0; }

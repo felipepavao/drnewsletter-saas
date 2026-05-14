@@ -27,6 +27,11 @@ function is_current(string $path): bool {
 }
 
 function redirect(string $path, int $code = 302): void {
+    // Em testes, redirect lança exceção capturada pelo runner. Mantenho
+    // a semântica de "sai do request" sem matar o processo PHP.
+    if (defined('APP_ENV') && APP_ENV === 'test' && class_exists('RedirectException', false)) {
+        throw new RedirectException($path, $code);
+    }
     Response::redirect($path, $code);
 }
 
@@ -60,13 +65,10 @@ function random_code(int $digits = 6): string {
 function current_user(): ?array {
     $uid = Session::userId();
     if (!$uid) return null;
-    static $cache = null;
-    if ($cache && $cache['id'] === $uid) return $cache;
-    $cache = Database::fetch(
+    return Database::fetch(
         "SELECT * FROM users WHERE id = ? AND status != 'deleted'",
         [$uid]
     );
-    return $cache;
 }
 
 function is_logged_in(): bool {

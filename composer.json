@@ -14,11 +14,6 @@
   "require-dev": {
     "pestphp/pest": "^2.0"
   },
-  "autoload-dev": {
-    "files": [
-      "tests/Helpers.php"
-    ]
-  },
   "scripts": {
     "test": "pest",
     "migrate": "php bin/migrate.php",

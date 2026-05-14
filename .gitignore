@@ -41,7 +41,11 @@ Thumbs.db
 # --- PHPUnit / Pest ---
 .phpunit.cache/
 .phpunit.result.cache
+.phpunit.cache
 coverage/
+
+# --- Test artifacts ---
+tests/Feature/Min*.php
 
 # --- Logs locais soltos ---
 *.log

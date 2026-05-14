@@ -71,7 +71,9 @@
                               placeholder="Lançamentos, datas importantes, sazonalidade específica deste cliente, foco do mês…"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn--primary">Gerar com IA</button>
+                <button type="submit" class="btn btn--primary" data-loading="Gerando planejamento… (10-30s)">
+                    Gerar com IA
+                </button>
             </form>
         </section>
     <?php endif; ?>

@@ -73,7 +73,9 @@ $isDraft = $plan['status'] === 'draft';
                                placeholder="Ex: temas de bastidor, ou agenda do mês">
                     </div>
                 </div>
-                <button type="submit" class="btn">Gerar mais temas</button>
+                <button type="submit" class="btn" data-loading="Gerando temas… (10-20s)">
+                    Gerar mais temas
+                </button>
             </form>
         </section>
     <?php endif; ?>
@@ -105,7 +107,9 @@ $isDraft = $plan['status'] === 'draft';
                     <form method="post"
                           action="<?= url('/planos/' . (int) $plan['id'] . '/temas/' . $i . '/escrever') ?>">
                         <?= Csrf::field() ?>
-                        <button type="submit" class="btn">Escrever email →</button>
+                        <button type="submit" class="btn" data-loading="Escrevendo email… (15-30s)">
+                            Escrever email →
+                        </button>
                     </form>
                 </footer>
             </article>

@@ -13,6 +13,19 @@
  */
 class Claude
 {
+    /**
+     * Hook de mock para testes. Quando setado via Claude::fake(fn),
+     * substitui a chamada real à API. A fn recebe (messages, system, context)
+     * e devolve o mesmo array que complete() retornaria.
+     *
+     * Usado em Pest tests. NUNCA usar em produção; nada no app chama isto
+     * fora de bootstrap de testes.
+     */
+    public static $mock = null;
+
+    /** Registra um mock callable. Passar null reseta. */
+    public static function fake(?callable $fn): void { self::$mock = $fn; }
+
     // Preços (USD por 1M de tokens) para estimar custo.
     // Atualizar se trocar de modelo.
     private const PRICING = [
@@ -32,6 +45,23 @@ class Claude
      */
     public static function complete(array $messages, string $system = '', array $context = []): array
     {
+        // Hook de mock para testes
+        if (self::$mock !== null) {
+            $result = (self::$mock)($messages, $system, $context);
+            // Ainda assim logamos em claude_calls para que asserts sobre auditoria
+            // funcionem em testes.
+            self::logCall(
+                $context,
+                (int) ($result['tokens_in']  ?? 0),
+                (int) ($result['tokens_out'] ?? 0),
+                (float) ($result['cost_usd'] ?? 0),
+                0,
+                true,
+                null
+            );
+            return $result;
+        }
+
         if (ANTHROPIC_API_KEY === '') {
             throw new RuntimeException('Anthropic API key not configured');
         }

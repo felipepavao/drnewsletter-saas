@@ -81,7 +81,9 @@ $isApproved = $draft['status'] === 'approved';
                     <textarea name="content" class="textarea" maxlength="4000" required
                               placeholder="Ex: 'Reescreva mais curto e direto.' ou 'Troca o hook por algo concreto sobre o Pedro que veio sábado.' ou 'Subject muito comercial — usa mais sobriedade.'"></textarea>
                 </div>
-                <button type="submit" class="btn btn--primary">Enviar para IA</button>
+                <button type="submit" class="btn btn--primary" data-loading="Reescrevendo… (15-30s)">
+                    Enviar para IA
+                </button>
             </form>
         </section>
     <?php endif; ?>

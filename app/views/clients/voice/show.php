@@ -114,7 +114,7 @@ $parsed = $current['parsed'] ?? null;
                 <label for="file">Arquivo</label>
                 <input type="file" id="file" name="file" class="input" accept=".txt,text/plain" required>
             </div>
-            <button type="submit" class="btn btn--primary">
+            <button type="submit" class="btn btn--primary" data-loading="Processando com IA… (10-20s)">
                 Enviar e processar
             </button>
         </form>

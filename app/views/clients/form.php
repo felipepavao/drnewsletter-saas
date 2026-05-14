@@ -1,7 +1,7 @@
 <?php
 /** @var ?array $client */
 /** @var array $errors */
-/** @var array $data */
+/** @var array $formData */
 $isEdit = $client !== null;
 $action = $isEdit ? url('/clientes/' . (int) $client['id']) : url('/clientes');
 ?>
@@ -17,7 +17,7 @@ $action = $isEdit ? url('/clientes/' . (int) $client['id']) : url('/clientes');
         <div class="field">
             <label for="name">Nome do negócio *</label>
             <input type="text" id="name" name="name" class="input"
-                   value="<?= e($data['name']) ?>" required maxlength="120"
+                   value="<?= e($formData['name']) ?>" required maxlength="120"
                    autofocus autocomplete="off">
             <?php if (!empty($errors['name'])): ?>
                 <p class="field-error"><?= e($errors['name']) ?></p>
@@ -27,7 +27,7 @@ $action = $isEdit ? url('/clientes/' . (int) $client['id']) : url('/clientes');
         <div class="field">
             <label for="email">Email de contato</label>
             <input type="email" id="email" name="email" class="input"
-                   value="<?= e($data['email']) ?>" autocomplete="off">
+                   value="<?= e($formData['email']) ?>" autocomplete="off">
             <p class="help">Opcional. Não enviamos emails para este endereço.</p>
             <?php if (!empty($errors['email'])): ?>
                 <p class="field-error"><?= e($errors['email']) ?></p>
@@ -39,7 +39,7 @@ $action = $isEdit ? url('/clientes/' . (int) $client['id']) : url('/clientes');
             <select id="segment" name="segment" class="select">
                 <option value="">—</option>
                 <?php foreach (Client::SEGMENTS as $k => $label): ?>
-                    <option value="<?= e($k) ?>" <?= selected($data['segment'] === $k) ?>>
+                    <option value="<?= e($k) ?>" <?= selected($formData['segment'] === $k) ?>>
                         <?= e($label) ?>
                     </option>
                 <?php endforeach; ?>
@@ -52,7 +52,7 @@ $action = $isEdit ? url('/clientes/' . (int) $client['id']) : url('/clientes');
         <div class="field">
             <label for="notes">Anotações internas</label>
             <textarea id="notes" name="notes" class="textarea" maxlength="2000"
-                      placeholder="Contexto sobre o cliente, contatos, particularidades…"><?= e($data['notes']) ?></textarea>
+                      placeholder="Contexto sobre o cliente, contatos, particularidades…"><?= e($formData['notes']) ?></textarea>
             <p class="help">Só você vê. Máx 2000 caracteres.</p>
             <?php if (!empty($errors['notes'])): ?>
                 <p class="field-error"><?= e($errors['notes']) ?></p>
